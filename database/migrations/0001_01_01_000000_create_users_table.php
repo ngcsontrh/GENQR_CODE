@@ -1,7 +1,10 @@
 <?php
 
+use App\Enums\Role;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -15,13 +18,24 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->string('phone')->unique();
+            $table->string('phone')->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->boolean('status')->default(true);
+            $table->string('role')->default(Role::User->value);
             $table->rememberToken();
             $table->timestamps();
         });
+
+        DB::table('users')->insert([
+            [
+                'name' => 'admin',
+                'email' => 'admin@gmail.com',
+                'password' => Hash::make('12345678aA@'),
+                'role' => Role::Admin->value,
+                'status' => true,
+            ]
+        ]);
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->string('email')->primary();

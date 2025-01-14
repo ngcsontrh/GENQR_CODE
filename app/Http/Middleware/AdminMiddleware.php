@@ -20,6 +20,6 @@ class AdminMiddleware
             return $next($request);
         }
 
-        return redirect()->route('admin.signin')->withErrors('Bạn cần đăng nhập trước.');
+        return redirect()->route('login')->withErrors('Bạn cần đăng nhập trước.');
     }
 }

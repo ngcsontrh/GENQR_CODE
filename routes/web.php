@@ -37,10 +37,6 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 Route::middleware([AdminMiddleware::class])->group(function () {
-    Route::get('/admin', function () {
-        return view('admins.products.index');
-    });
-
     Route::get('admin/blogs', [BlogsController::class, 'index'])->name('admin.blogs.index');
     Route::get('admin/blogs/create', [BlogsController::class, 'create'])->name('admin.blogs.create');
     Route::post('admin/blogs/store', [BlogsController::class, 'store'])->name('admin.blogs.store');
@@ -58,8 +54,8 @@ Route::middleware([AdminMiddleware::class])->group(function () {
 
     Route::get('admin/manage-users', [ManageUsersController::class, 'index'])->name('admin.manageUsers.index');
     Route::patch('/users/{id}/toggle-status', [ManageUsersController::class, 'toggleStatus'])->name('users.toggleStatus');
-    Route::post('admin/logout', [SigninController::class, 'logout'])->name('admin.logout');
+    // Route::post('admin/logout', [SigninController::class, 'logout'])->name('admin.logout');
 
 });
-Route::get('/admin/signin', [SignInController::class, 'create'])->name('admin.signin');
-Route::post('/admin/signin', [SignInController::class, 'store'])->name('admin.signin.store');
+//Route::get('/admin/signin', [SignInController::class, 'create'])->name('admin.signin');
+//Route::post('/admin/signin', [SignInController::class, 'store'])->name('admin.signin.store');

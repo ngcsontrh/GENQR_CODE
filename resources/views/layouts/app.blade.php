@@ -42,9 +42,9 @@
                 <div class="flex items-center">
                     <!-- Authentication Links -->
                     @guest
-                        @if (Route::has('login'))
-                            <a href="{{ route('login') }}" class="text-gray-800 hover:text-gray-700 px-3 py-2">{{ __('Đăng nhập') }}</a>
-                        @endif
+                            @if (Route::has('login'))
+                                <a href="{{ route('login') }}" class="text-gray-800 hover:text-gray-700 px-3 py-2">{{ __('Đăng nhập') }}</a>
+                            @endif
 
                         @if (Route::has('register'))
                             <a href="{{ route('register') }}" class="text-gray-800 hover:text-gray-700 px-3 py-2">{{ __('Đăng ký') }}</a>

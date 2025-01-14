@@ -33,7 +33,7 @@
                     <div class="text-lg font-semibold">
                         Xin chào, {{ auth('admin')->user()->username }}
                     </div>
-                    <form action="{{ route('admin.logout') }}" method="POST">
+                    <form action="{{ route('logout') }}" method="POST">
                         @csrf
                         <button type="submit" class="p-2 bg-red-500 text-white rounded-lg hover:bg-red-600">
                             Đăng xuất

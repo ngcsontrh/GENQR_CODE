@@ -217,7 +217,7 @@ class QRCodeController extends Controller
         $qrReader = new QrReader($tempPath);
         $decodedText = $qrReader->text();
         return response()->json([
-            'decoded' => $decodedText ?? 'No QR data found.'
+            'decoded' => $decodedText ?? 'Không có dữ liệu mã QR.'
         ]);
     }
 
