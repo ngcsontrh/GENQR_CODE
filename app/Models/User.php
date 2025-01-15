@@ -31,6 +31,16 @@ class User extends Authenticatable
         return $this->belongsToMany(Role::class);
     }
 
+    public function blogs()
+    {
+        return $this->hasMany(Blog::class);
+    }
+
+    public function contacts()
+    {
+        return $this->hasMany(Contact::class);
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

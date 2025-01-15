@@ -15,10 +15,16 @@ class Blog extends Model
         'description',
         'summary',
         'content',
-        'status'
+        'status',
+        'user_id',
     ];
     public function image()
     {
         return $this->morphOne(Image::class, 'imageable');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }
