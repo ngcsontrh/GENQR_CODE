@@ -25,13 +25,13 @@
 </head>
 <body class="font-sans antialiased">
 <div class="flex min-h-[100vh]">
-    @if(auth('admin')->check())
+    @if(Auth::check() && Auth::user()->role === \App\Enums\Role::Admin->value)
         <div class="w-1/6 md:w-1/12 lg:w-1/6 transition-all duration-500">
             <div class=" transition-all duration-300 transform start-0 block bottom-0 z-[60] h-full bg-white border-e border-gray-200 py-2 overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300">
                 <!-- Thông tin nhân viên và nút đăng xuất -->
                 <div class="p-4 bg-gray-100 border-b border-gray-300 flex justify-between items-center">
                     <div class="text-lg font-semibold">
-                        Xin chào, {{ auth('admin')->user()->username }}
+                        Xin chào, {{ Auth::user()->name }}
                     </div>
                     <form action="{{ route('logout') }}" method="POST">
                         @csrf
@@ -86,7 +86,7 @@
             </div>
         </div>
     @endif
-    <div class="@if(auth('admin')->check()) w-5/6 md:w-11/12 lg:w-5/6 @else w-full bg-gray-300 @endif transition-all duration-500 p-5">
+    <div class="@if(Auth::check() && Auth::user()->role === \App\Enums\Role::Admin->value) w-5/6 md:w-11/12 lg:w-5/6 @else w-full bg-gray-300 @endif transition-all duration-500 p-5">
         {{ $slot }}
     </div>
 </div>
