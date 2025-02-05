@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <!-- Toastr JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
 </head>
 <body>
 <!-- Header -->
@@ -192,22 +191,34 @@
         <!-- Navigation Items -->
         <div class="flex-1">
             <nav class="flex flex-col">
-                <a href="{{ route('generator') }}" class="flex items-center px-4 py-2 hover:bg-blue-700">
+                <a href="{{ route('generator') }}"
+                   class="flex items-center px-4 py-2 hover:bg-blue-700 {{ request()->is('generator') ? 'bg-blue-600' : '' }}"
+                >
                     <i class="fas fa-qrcode mr-3"></i> Tạo mã QR
                 </a>
-                <a href="{{ route('decode') }}" class="flex items-center px-4 py-2 hover:bg-blue-700">
+                <a href="{{ route('decode') }}"
+                   class="flex items-center px-4 py-2 hover:bg-blue-700 {{ request()->is('decode') ? 'bg-blue-600' : '' }}"
+                >
                     <i class="fas fa-qrcode mr-3"></i> Đọc mã QR
                 </a>
-                <a href="{{ route('profile') }}" class="flex items-center px-4 py-2 hover:bg-blue-700">
+                <a href="{{ route('profile') }}"
+                   class="flex items-center px-4 py-2 hover:bg-blue-700 {{ request()->is('profile') ? 'bg-blue-600' : '' }}"
+                >
                     <i class="fas fa-user mr-3"></i> Tài khoản
                 </a>
-                <a href="{{ route('blog') }}" class="flex items-center px-4 py-2 hover:bg-blue-700">
+                <a href="{{ route('blog') }}"
+                   class="flex items-center px-4 py-2 hover:bg-blue-700 {{ request()->is('blog') ? 'bg-blue-600' : '' }}"
+                >
                     <i class="fa-brands fa-twitter mr-3"></i> Bài viết
                 </a>
-                <a href="{{ route('contact') }}" class="flex items-center px-4 py-2 hover:bg-blue-700">
+                <a href="{{ route('contact') }}"
+                   class="flex items-center px-4 py-2 hover:bg-blue-700 {{ request()->is('contact') ? 'bg-blue-600' : '' }}"
+                >
                     <i class="fa-solid fa-file-signature mr-3"></i> Liên hệ
                 </a>
-                <a href="{{ route('qr.history') }}" class="flex items-center px-4 py-2 hover:bg-blue-700">
+                <a href="{{ route('qr.history') }}"
+                   class="flex items-center px-4 py-2 hover:bg-blue-700 {{ request()->is('qr-history') ? 'bg-blue-600' : '' }}"
+                >
                     <i class="fa-solid fa-clock-rotate-left mr-3"></i> Lịch sử tạo mã
                 </a>
             </nav>

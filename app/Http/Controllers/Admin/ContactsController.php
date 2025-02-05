@@ -7,9 +7,22 @@ use App\Models\Contact;
 use Illuminate\Http\Request;
 class ContactsController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $contacts = Contact::orderBy('created_at','desc')->paginate(5);
+        $name = $request->input('name');
+        $email = $request->input('email');
+        $phone = $request->input('phone');
+        $contacts = Contact::query();
+        if ($name) {
+            $contacts->where('name', 'like', '%' . $name . '%');
+        }
+        if ($email) {
+            $contacts->where('email', 'like', '%' . $email . '%');
+        }
+        if ($phone) {
+            $contacts->where('phone', 'like', '%' . $phone . '%');
+        }
+        $contacts = $contacts->orderBy('created_at','desc')->paginate(5);
         return view('admins.contacts.index', compact('contacts'));
     }
     public function toggleStatus(Request $request, $id)

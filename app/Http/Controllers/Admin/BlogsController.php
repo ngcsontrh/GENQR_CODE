@@ -11,8 +11,13 @@ use Illuminate\Support\Facades\Storage;
 
 class BlogsController extends Controller
 {
-    public function index() {
-        $blogs = Blog::orderBy('created_at','desc')->paginate(10);
+    public function index(Request $request) {
+        $title = $request->input('title');
+        $blogs = Blog::query();
+        if ($title) {
+            $blogs = $blogs->where('title', 'like', '%' . $title . '%');
+        }
+        $blogs = $blogs->orderBy('created_at','desc')->paginate(10);
         return view('admins.blogs.index', compact('blogs'));
     }
     public function create() {
