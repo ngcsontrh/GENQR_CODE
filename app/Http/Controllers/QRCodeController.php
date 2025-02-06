@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use App\Models\QRCode;
 use Endroid\QrCode\QrCode as EndroidQrCode;
@@ -24,7 +25,6 @@ class QRCodeController extends Controller
             return response()->json(['error' => 'Invalid type'], 400);
         }
 
-        // Lấy dữ liệu QR Code dựa trên type
         $qrData = $this->getQrDataByType($type, $request);
         if (!$qrData) {
             return response()->json(['error' => 'Invalid data for QR Code'], 400);
@@ -37,18 +37,29 @@ class QRCodeController extends Controller
         $fileName = $this->generateFileName($request->hasFile('logo'));
         $filePath = 'qrcodes/' . $fileName;
 
-        $writer = new PngWriter();
-        $qrCode = EndroidQrCode::create($qrData) // Sử dụng dữ liệu thực
-        ->setSize(300)
-            ->setMargin(10);
+        if ($type === 'Bank') {
+            $response = Http::withOptions([
+                'verify' => false,
+            ])->post('https://api.vietqr.io/v2/generate', $qrData);
 
-        $logo = $this->getLogoIfExists($request);
+            if (!$response->successful() || !isset($response['data']['qrDataURL'])) {
+                return response()->json(['error' => 'Failed to generate QR code'], 500);
+            }
 
-        $result = $writer->write($qrCode, $logo);
+            Storage::put('public/' . $filePath, file_get_contents($response['data']['qrDataURL']));
+        }
+        else {
+            $writer = new PngWriter();
+            $qrCode = EndroidQrCode::create($qrData) // Sử dụng dữ liệu thực
+                ->setSize(300)
+                ->setMargin(10);
 
-        Storage::put('public/' . $filePath, $result->getString());
+            $logo = $this->getLogoIfExists($request);
 
-        // Lưu thông tin chi tiết vào database
+            $result = $writer->write($qrCode, $logo);
+
+            Storage::put('public/' . $filePath, $result->getString());
+        }
         $this->storeQrCodeToDatabase($request, $type, $filePath, $uniqueId);
 
         return response()->json(['path' => Storage::url($filePath)]);
@@ -88,6 +99,13 @@ class QRCodeController extends Controller
                 $encryption = $request->input('wifi_encryption', 'nopass'); // Mặc định là không mã hóa
                 return "WIFI:S:{$ssid};T:{$encryption};P:{$password};;";
 
+            case 'Bank':
+                return [
+                    'acqId' => $request->input('bank_acq_id'),
+                    'accountNo' => $request->input('bank_account_no'),
+                    'accountName' => $request->input('bank_account_name'),
+                    'template' => 'qr_only'
+                ];
             default:
                 return null;
         }
@@ -140,6 +158,9 @@ class QRCodeController extends Controller
             'wifi_name' => $request->input('wifi_name'), // Tên WiFi (SSID)
             'wifi_password' => $request->input('wifi_password'), // Mật khẩu WiFi
             'wifi_encryption' => $request->input('wifi_encryption'), // Loại mã hóa WiFi
+            'bank_acq_id' => $request->input('bank_acq_id'), // Mã ngân hàng
+            'bank_account_no' => $request->input('bank_account_no'), // STK ngân hàng
+            'bank_account_name' => $request->input('bank_account_name'), // Tên tài khoản ngân hàng
         ]);
     }
 
@@ -162,6 +183,9 @@ class QRCodeController extends Controller
             'wifi_name' => $qrcode->wifi_name, // Tên WiFi
             'wifi_password' => $qrcode->wifi_password, // Mật khẩu WiFi
             'wifi_encryption' => $qrcode->wifi_encryption, // Loại mã hóa WiFi
+            'bank_acq_id' => $qrcode->bank_acq_id, // Mã định danh ngân hàng (thường gọi là BIN)
+            'bank_account_no' => $qrcode->bank_account_no, // STK ngân hàng
+            'bank_account_name' => $qrcode->bank_account_name, // Tên tài khoản ngân hàng
         ];
 
         return response()->json($data);
@@ -220,5 +244,4 @@ class QRCodeController extends Controller
             'decoded' => $decodedText ?? 'Không có dữ liệu mã QR.'
         ]);
     }
-
 }

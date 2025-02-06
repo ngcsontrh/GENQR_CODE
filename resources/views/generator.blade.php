@@ -87,6 +87,14 @@
                         <small class="text-gray-500 hidden md:block">Gửi lời nhắn tới mọi người</small>
                     </div>
                 </button>
+                <button onclick="showForm('bankForm', this)" class="font-bold text-xl px-10 py-6 mb-2 border shadow-xl rounded-xl hover:text-purple-200 flex focus:text-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-7 h-7 mr-2" fill="var(--template-selector-icon-main-color, #5D82D5)">
+                        <path d="M243.4 2.6l-224 96c-14 6-21.8 21-18.7 35.8S16.8 160 32 160l0 8c0 13.3 10.7 24 24 24l400 0c13.3 0 24-10.7 24-24l0-8c15.2 0 28.3-10.7 31.3-25.6s-4.8-29.9-18.7-35.8l-224-96c-8-3.4-17.2-3.4-25.2 0zM128 224l-64 0 0 196.3c-.6 .3-1.2 .7-1.8 1.1l-48 32c-11.7 7.8-17 22.4-12.9 35.9S17.9 512 32 512l448 0c14.1 0 26.5-9.2 30.6-22.7s-1.1-28.1-12.9-35.9l-48-32c-.6-.4-1.2-.7-1.8-1.1L448 224l-64 0 0 192-40 0 0-192-64 0 0 192-48 0 0-192-64 0 0 192-40 0 0-192zM256 64a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"/></svg>
+                    <div class="text-start">
+                        <p>Ngân hàng</p>
+                        <small class="text-gray-500 hidden md:block">Liên kết với ngân hàng của bạn</small>
+                    </div>
+                </button>
 {{--                <button onclick="showForm('imageForm', this)" class="font-bold text-xl px-10 py-6 mb-2 border shadow-xl rounded-xl hover:text-purple-200 flex focus:text-white">--}}
 {{--                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-7 h-7 mr-2" fill="var(--template-selector-icon-main-color, #5D82D5)">--}}
 {{--                        <path d="M448 80c8.8 0 16 7.2 16 16l0 319.8-5-6.5-136-176c-4.5-5.9-11.6-9.3-19-9.3s-14.4 3.4-19 9.3L202 340.7l-30.5-42.7C167 291.7 159.8 288 152 288s-15 3.7-19.5 10.1l-80 112L48 416.3l0-.3L48 96c0-8.8 7.2-16 16-16l384 0zM64 32C28.7 32 0 60.7 0 96L0 416c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-320c0-35.3-28.7-64-64-64L64 32zm80 192a48 48 0 1 0 0-96 48 48 0 1 0 0 96z"/></svg>--}}
@@ -168,6 +176,19 @@
                 <label class="block text-blue-500 font-semibold mb-2">Nội dung</label>
                 <textarea id="docsContentInput" placeholder="Nhập nội dung tài liệu" class="w-full min-h-28 border border-gray-300 rounded px-4 py-2 mb-4"></textarea>
                 <button onclick="generateQRCode('Docs')" class="bg-purple-500 text-white px-6 py-2 rounded shadow hover:bg-purple-600 flex items-center mx-auto">
+                    Tạo QR code
+                </button>
+            </div>
+
+            <div id="bankForm" class="form-container hidden">
+                <label class="block text-blue-500 font-semibold mb-2">Ngân hàng</label>
+                <select id="bankAcqId" class="w-full cursor-pointer focus:outline-none">
+                    <option selected value="">Chọn ngân hàng</option>
+                    <!-- Các tùy chọn sẽ được thêm động từ JavaScript -->
+                </select>
+                <input required type="text" id="bankAccountNo" placeholder="Số tài khoản" class="w-full border border-gray-300 rounded px-4 py-2 mb-4">
+                <input required type="text" id="bankAccountName" placeholder="Tên tài khoản" class="w-full border border-gray-300 rounded px-4 py-2 mb-4">
+                <button onclick="generateQRCode('Bank')" class="bg-purple-500 text-white px-6 py-2 rounded shadow hover:bg-purple-600 flex items-center mx-auto">
                     Tạo QR code
                 </button>
             </div>
@@ -262,6 +283,11 @@
                     //     const imageFile = document.getElementById('imageFileInput').files[0];
                     //     formData.append('image', imageFile);
                     //     break;
+                    case 'Bank':
+                        formData.append('bank_acq_id', document.getElementById('bankAcqId').value);
+                        formData.append('bank_account_no', document.getElementById('bankAccountNo').value);
+                        formData.append('bank_account_name', document.getElementById('bankAccountName').value);
+                        break;
 
                     default:
                         console.error('Invalid type');
@@ -450,6 +476,54 @@
                     reader.readAsDataURL(logoInput.files[0]);
                 }
             }
+
+            function fetchBankList() {
+                fetch('https://api.vietqr.io/v2/banks')
+                    .then(response => response.json())
+                    .then(data => {
+                        const bankSelect = document.getElementById('bankAcqId');
+
+                        // Xóa các option cũ (tránh trùng lặp nếu gọi lại)
+                        bankSelect.innerHTML = '<option value="">Chọn ngân hàng</option>';
+
+                        // Thêm danh sách ngân hàng
+                        data.data.forEach(bank => {
+                            const option = document.createElement('option');
+                            option.value = bank.bin;
+                            option.textContent = bank.name;
+                            bankSelect.appendChild(option);
+                        });
+
+                        // Sau khi thêm xong, khởi tạo TomSelect
+                        initTomselect();
+                    })
+                    .catch(error => console.error('Lỗi khi lấy danh sách ngân hàng:', error));
+            }
+
+            function initTomselect() {
+                const selectElement = document.getElementById("bankAcqId");
+
+                // Kiểm tra nếu đã có TomSelect, thì hủy trước khi khởi tạo mới
+                if (selectElement.tomselect) {
+                    selectElement.tomselect.destroy();
+                }
+
+                const select = new TomSelect(selectElement, {
+                    create: false, // Không cho phép nhập tùy chọn mới
+                    allowEmptyOption: false, // Không cho phép giá trị rỗng
+                });
+
+                select.on("change", function (value) {
+                    if (value === "") {
+                        alert("Vui lòng chọn ngân hàng khác!");
+                        select.clear();
+                    }
+                });
+            }
+
+            document.addEventListener('DOMContentLoaded', function () {
+                fetchBankList();
+            });
         </script>
     </x-slot>
 </x-user-layout>

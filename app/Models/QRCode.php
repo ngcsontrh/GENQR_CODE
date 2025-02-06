@@ -27,6 +27,9 @@ class QRCode extends Model
         'wifi_password',
         'wifi_encryption',
         'docs_content',
+        'bank_acq_id',
+        'bank_account_no',
+        'bank_account_name',
         ''
     ];
     public function user()
