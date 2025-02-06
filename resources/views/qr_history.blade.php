@@ -30,84 +30,150 @@
                 <p class="">Bạn chưa tạo mã QR nào.</p>
             </div>
         @else
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-20 items-center text-center">
-                @foreach($qrcodes as $qrcode)
-                    <div class="flex flex-col bg-white shadow-2xl rounded-lg p-4">
-                        <!-- QR Code Image -->
-                        <div class="flex-shrink-0 mb-4">
-                            <img src="{{ Storage::url($qrcode->qr_code_path) }}" alt="QR Code with Logo" class="w-2/3 object-cover rounded-md mx-auto">
-                        </div>
-                        <!-- Details -->
-                        <div class="flex flex-col justify-between flex-grow">
-                            <div>
-                                <h3 class="text-lg font-medium mb-2">Loại QR Code: {{ ucfirst($qrcode->type) }}</h3>
-                                <div class="text-sm text-gray-700">
-                                    @switch($qrcode->type)
-                                        @case('URL')
-                                            <p><strong>URL:</strong> <a href="{{ $qrcode->url }}" class="text-blue-500 hover:underline">{{ $qrcode->url }}</a></p>
-                                            @break
-
-                                        @case('Vcard')
-                                            <p><strong>Họ & Tên:</strong> {{ $qrcode->vcard_lastname }} {{ $qrcode->vcard_name }} </p>
-                                            <p><strong>Email:</strong> {{ $qrcode->vcard_email }}</p>
-                                            @break
-
-                                        @case('Email')
-                                            <p><strong>Email:</strong> {{ $qrcode->email_address }}</p>
-                                            <p><strong>Tiêu đề:</strong> {{ $qrcode->email_subject }}</p>
-                                            <p><strong>Nội dung:</strong> {{ $qrcode->email_body }}</p>
-                                            @break
-
-                                        @case('Phone')
-                                            <p><strong>Số điện thoại:</strong> {{ $qrcode->phone_number }}</p>
-                                            @break
-
-                                        @case('SMS')
-                                            <p><strong>Số điện thoại:</strong> {{ $qrcode->phone_number }}</p>
-                                            <p><strong>Nội dung:</strong> {{ $qrcode->sms_content }}</p>
-                                            @break
-
-                                        @case('Wifi')
-                                            <p><strong>Tên WiFi:</strong> {{ $qrcode->wifi_name }}</p>
-                                            <p><strong>Mật khẩu:</strong> {{ $qrcode->wifi_password }}</p>
-                                            <p><strong>Loại mã hóa:</strong> {{ $qrcode->wifi_encryption }}</p>
-                                            @break
-
-                                        @case('Docs')
-                                            <p><strong>Văn bản:</strong> {{ $qrcode->docs_content }}</p>
-                                            @break
-
-                                        @default
-                                            <p>Thông tin không xác định.</p>
-                                    @endswitch
-                                </div>
-                                <p class="text-gray-500 text-sm mt-2">Ngày tạo: {{ $qrcode->created_at->format('d/m/Y H:i') }}</p>
-                            </div>
-                            <!-- Download Button -->
-                            <div class="mt-4">
-                                <a href="{{ Storage::url($qrcode->qr_code_path) }}" download class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition duration-300 flex w-32 mx-auto items-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" class="w-5 h-5 mr-1" fill="white">
-                                        <path d="M144 480C64.5 480 0 415.5 0 336c0-62.8 40.2-116.2 96.2-135.9c-.1-2.7-.2-5.4-.2-8.1c0-88.4 71.6-160 160-160c59.3 0 111 32.2 138.7 80.2C409.9 102 428.3 96 448 96c53 0 96 43 96 96c0 12.2-2.3 23.8-6.4 34.6C596 238.4 640 290.1 640 352c0 70.7-57.3 128-128 128l-368 0zm79-167l80 80c9.4 9.4 24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-39 39L344 184c0-13.3-10.7-24-24-24s-24 10.7-24 24l0 134.1-39-39c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9z"/></svg>
+            <!-- Danh sách QR Codes -->
+            <div x-data="{ showModal: false, qrData: {} }" class="overflow-x-auto shadow-md rounded-lg">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-300">
+                    <tr>
+                        <th class="px-6 py-3 text-start text-xs font-medium text-gray-700 uppercase">Hình ảnh</th>
+                        <th class="px-6 py-3 text-start text-xs font-medium text-gray-700 uppercase">Loại mã QR</th>
+                        <th class="px-6 py-3 text-start text-xs font-medium text-gray-700 uppercase">Tên mã QR</th>
+                        <th class="px-6 py-3 text-start text-xs font-medium text-gray-700 uppercase">Ngày tạo</th>
+                        <th class="px-6 py-3 text-start text-xs font-medium text-gray-700 uppercase">Hành động</th>
+                    </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                    @foreach($qrcodes as $qrcode)
+                        <tr>
+                            <!-- Hình ảnh QR -->
+                            <td class="px-6 py-4">
+                                <img
+                                    src="{{ Storage::url($qrcode->qr_code_path) }}"
+                                    alt="QR Code"
+                                    class="w-16 h-16 cursor-pointer hover:scale-110 transition-transform"
+                                    @click="showModal = true; qrData = {
+                                        id: '{{ $qrcode->id }}',
+                                        image: '{{ Storage::url($qrcode->qr_code_path) }}',
+                                        type: '{{ ucfirst($qrcode->type) }}',
+                                        qr_code_name: '{{ $qrcode->qr_code_name }}',
+                                        created_at: '{{ $qrcode->created_at->format('d/m/Y H:i') }}',
+                                        phone_number: '{{ $qrcode->phone_number }}',
+                                        sms_content: '{{ $qrcode->sms_content }}',
+                                        url: '{{ $qrcode->url }}',
+                                        file_category: '{{ $qrcode->file_category }}'
+                                    }">
+                            </td>
+                            <!-- Loại mã QR -->
+                            <td class="px-6 py-4">{{ ucfirst($qrcode->type) }}</td>
+                            <!-- Tên mã QR -->
+                            <td class="px-6 py-4">{{ $qrcode->qr_code_name }}</td>
+                            <!-- Ngày tạo -->
+                            <td class="px-6 py-4">{{ $qrcode->created_at->format('d/m/Y H:i') }}</td>
+                            <!-- Nút Xóa -->
+                            <td class="px-6 py-4">
+                                <a href="{{ Storage::url($qrcode->qr_code_path) }}" download class="inline-block bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-700">
+                                    <i class="fa-solid fa-download mr-2"></i>
                                     Tải xuống
                                 </a>
 
-{{--                                <a href="{{ route('qr.edit', ['unique_id' => $qrcode->unique_id]) }}" class="text-white bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-lg mt-2">Chỉnh sửa</a>--}}
+                                <a href="{{ route('qr.edit', ['unique_id' => $qrcode->unique_id]) }}" class="inline-block text-white bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-lg">
+                                    <i class="fa-solid fa-pen-to-square mr-2"></i>
+                                    Chỉnh sửa
+                                </a>
 
-                                <form action="{{ route('qrcodes.destroy', $qrcode->id) }}" method="POST" onsubmit="return confirm('Bạn có chắc muốn xóa mã QR này không?');">
+                                <form class="inline-block" action="{{ route('qrcodes.destroy', $qrcode->id) }}" method="POST" onsubmit="return confirm('Bạn có chắc muốn xóa mã QR này không?');">
                                     @csrf
                                     @method('DELETE')
-                                    <button class="text-white bg-red-500 hover:bg-red-600 px-4 py-2 rounded-lg mt-2">
+                                    <button class="text-white bg-red-500 hover:bg-red-600 px-4 py-2 rounded-lg">
                                         <i class="fa-solid fa-trash-can mr-2"></i>Xóa
                                     </button>
                                 </form>
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+                {{ $qrcodes->links('layouts.pagination', ['role' => 'user']) }}
+
+
+                <!-- Modal hiển thị chi tiết QR -->
+                <div
+                    x-show="showModal"
+                    x-transition
+                    class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 z-50"
+                    @click.self="showModal = false"
+                    style="display: none;">
+                    <div class="bg-white p-6 rounded-lg shadow-lg max-w-lg relative">
+                        <!-- Nút Close -->
+                        <button
+                            @click="showModal = false"
+                            class="absolute top-0 right-0 m-4 text-gray-600 text-2xl hover:text-gray-400">&times;
+                        </button>
+
+                        <!-- Nội dung modal -->
+                        <div class="flex flex-col items-center">
+                            <!-- Ảnh phóng to -->
+                            <img :src="qrData.image" alt="QR Code" class="w-96 h-96 mb-4 rounded-lg shadow-lg">
+                            <!-- Thông tin QR -->
+                            <div class="text-left w-full">
+                                <h3 class="text-lg font-bold mb-2 text-center">Thông tin chi tiết mã QR</h3>
+                                <p><strong>Loại mã QR:</strong> <span x-text="qrData.type"></span></p>
+                                <p><strong>Tên mã QR:</strong> <span x-text="qrData.qr_code_name"></span></p>
+
+                                <!-- Hiển thị thông tin theo từng loại mã QR -->
+                                <template x-if="qrData.type === 'Vcard'">
+                                    <div>
+                                        <p><strong>Họ & Tên:</strong> <span x-text="qrData.vcard_lastname"></span></p>
+                                        <p><strong>Email:</strong> <span x-text="qrData.vcard_email"></span></p>
+                                    </div>
+                                </template>
+                                <template x-if="qrData.type === 'SMS'">
+                                    <div>
+                                        <p><strong>Số điện thoại:</strong> <span x-text="qrData.phone_number"></span></p>
+                                        <p><strong>Nội dung SMS:</strong> <span x-text="qrData.sms_content"></span></p>
+                                    </div>
+                                </template>
+
+                                <template x-if="qrData.type === 'Phone'">
+                                    <p><strong>Số điện thoại:</strong> <span x-text="qrData.phone_number"></span></p>
+                                </template>
+
+                                <template x-if="qrData.type === 'URL'">
+                                    <p><strong>URL:</strong> <a :href="qrData.url" target="_blank" class="text-blue-500 hover:underline" x-text="qrData.url"></a></p>
+                                </template>
+
+                                <template x-if="qrData.type === 'Email'">
+                                    <div>
+                                        <p><strong>Email:</strong><span x-text="qrData.email_address"></span> </p>
+                                        <p><strong>Tiêu đề:</strong><span x-text="qrData.email_subject"></span> </p>
+                                        <p><strong>Nội dung:</strong><span x-text="qrData.email_body"></span> </p>
+                                    </div>
+                                </template>
+                                <template x-if="qrData.type === 'Wifi'">
+                                    <div>
+                                        <p><strong>Tên WiFi:</strong> <span x-text="qrData.wifi_name"></span></p>
+                                        <p><strong>Mật khẩu:</strong> <span x-text="qrData.wifi_password"></span></p>
+                                        <p><strong>Loại mã hóa:</strong> <span x-text="qrData.wifi_encryption"></span></p>
+                                    </div>
+                                </template>
+                                <template x-if="qrData.type === 'File'">
+                                    <div>
+                                        <p><strong>Loại tệp tin:</strong><span x-text="qrData.file_category"></span> </p>
+                                        <p><strong>URL:</strong> <a :href="qrData.url" target="_blank" class="text-blue-500 hover:underline" x-text="qrData.url"></a></p>
+                                    </div>
+                                </template>
+                                <!-- Hiển thị thông tin Văn bản -->
+                                <template x-if="qrData.type === 'Docs'">
+                                    <div>
+                                        <p><strong>Văn bản:</strong> <span x-text="qrData.docs_content"></span></p>
+                                    </div>
+                                </template>
+                                <p><strong>Ngày tạo:</strong> <span x-text="qrData.created_at"></span></p>
                             </div>
                         </div>
                     </div>
-                @endforeach
-            </div>
 
-            <div class="mt-6">
-                {{ $qrcodes->links() }} <!-- Pagination links -->
+                </div>
             </div>
         @endif
     </div>

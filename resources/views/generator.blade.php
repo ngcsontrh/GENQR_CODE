@@ -95,19 +95,21 @@
                         <small class="text-gray-500 hidden md:block">Liên kết với ngân hàng của bạn</small>
                     </div>
                 </button>
-{{--                <button onclick="showForm('imageForm', this)" class="font-bold text-xl px-10 py-6 mb-2 border shadow-xl rounded-xl hover:text-purple-200 flex focus:text-white">--}}
-{{--                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-7 h-7 mr-2" fill="var(--template-selector-icon-main-color, #5D82D5)">--}}
-{{--                        <path d="M448 80c8.8 0 16 7.2 16 16l0 319.8-5-6.5-136-176c-4.5-5.9-11.6-9.3-19-9.3s-14.4 3.4-19 9.3L202 340.7l-30.5-42.7C167 291.7 159.8 288 152 288s-15 3.7-19.5 10.1l-80 112L48 416.3l0-.3L48 96c0-8.8 7.2-16 16-16l384 0zM64 32C28.7 32 0 60.7 0 96L0 416c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-320c0-35.3-28.7-64-64-64L64 32zm80 192a48 48 0 1 0 0-96 48 48 0 1 0 0 96z"/></svg>--}}
+                <button onclick="showForm('fileForm', this)" class="font-bold text-xl px-10 py-6 mb-2 border shadow-xl rounded-xl hover:text-purple-200 flex focus:text-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-7 h-7 mr-2" fill="var(--template-selector-icon-main-color, #5D82D5)">
+                        <path d="M448 80c8.8 0 16 7.2 16 16l0 319.8-5-6.5-136-176c-4.5-5.9-11.6-9.3-19-9.3s-14.4 3.4-19 9.3L202 340.7l-30.5-42.7C167 291.7 159.8 288 152 288s-15 3.7-19.5 10.1l-80 112L48 416.3l0-.3L48 96c0-8.8 7.2-16 16-16l384 0zM64 32C28.7 32 0 60.7 0 96L0 416c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-320c0-35.3-28.7-64-64-64L64 32zm80 192a48 48 0 1 0 0-96 48 48 0 1 0 0 96z"/></svg>
 
-{{--                    <div class="text-start">--}}
-{{--                        <p>Hình ảnh</p>--}}
-{{--                        <small class="text-gray-500 hidden md:block">Chia sẻ hình ảnh thuận tiện </small>--}}
-{{--                    </div>--}}
-{{--                </button>--}}
+                    <div class="text-start">
+                        <p>Tệp tin</p>
+                        <small class="text-gray-500 hidden md:block">Chia sẻ tệp tin thuận tiện </small>
+                    </div>
+                </button>
             </div>
 
             <!-- Form cho Website -->
             <div id="websiteForm" class="form-container">
+                <label for="qr_code_name" class="block text-blue-500 font-semibold mb-2">Tên mã QR</label>
+                <input type="text" id="qr_code_name" placeholder="Tên QR" class="w-full border border-gray-300 rounded px-4 py-2 mb-4 focus:outline-none focus:ring-2">
                 <label class="block text-blue-500 font-semibold mb-2">Nhập website (URL)</label>
                 <input type="text" id="websiteInput" placeholder="https://www.qrcode-gen.com" class="w-full border border-gray-300 rounded px-4 py-2 mb-4 focus:outline-none focus:ring-2">
                 <button onclick="generateQRCode('URL')" class="bg-purple-500 text-white px-6 py-2 rounded shadow hover:bg-purple-600 flex items-center mx-auto">
@@ -193,13 +195,21 @@
                 </button>
             </div>
 
-{{--            <div id="imageForm" class="form-container hidden">--}}
-{{--                <label class="block text-blue-500 font-semibold mb-2">Tải lên hình ảnh</label>--}}
-{{--                <input type="file" id="imageFileInput" accept="image/*" class="w-full border border-gray-300 rounded px-4 py-2 mb-4">--}}
-{{--                <button onclick="generateQRCode('Image')" class="bg-purple-500 text-white px-6 py-2 rounded shadow hover:bg-purple-600 flex items-center mx-auto">--}}
-{{--                    Tạo QR code--}}
-{{--                </button>--}}
-{{--            </div>--}}
+            <div id="fileForm" class="form-container hidden">
+                <label class="block text-blue-500 font-semibold mb-2">Tải lên hình ảnh</label>
+                <input type="file" id="file_upload" class="w-full border border-gray-300 rounded px-4 py-2 mb-4">
+                <label class="block text-blue-500 font-semibold mb-2">Danh mục</label>
+                <select id="file_category" class="font-semibold mb-2 w-full border border-gray-300 rounded px-4 py-2 mb-4">
+                    <option value="">Chọn danh mục (không bắt buộc)</option>
+                    <option value="image">Hình ảnh</option>
+                    <option value="excel">Excel</option>
+                    <option value="word">Word</option>
+                    <option value="pdf">PDF</option>
+                </select>
+                <button onclick="generateQRCode('File')" class="bg-purple-500 text-white px-6 py-2 rounded shadow hover:bg-purple-600 flex items-center mx-auto">
+                    Tạo QR code
+                </button>
+            </div>
         </div>
 
         <!-- Placeholder hiển thị QR code -->
@@ -225,12 +235,21 @@
         </div>
     </div>
 
-    <x-slot name="script">
+    <x-slot name="script">4
         <script>
             function showForm(formId, button) {
                 // Ẩn tất cả các form và hiển thị form đã chọn
                 document.querySelectorAll('.form-container').forEach(form => form.classList.add('hidden'));
-                document.getElementById(formId).classList.remove('hidden');
+                document.querySelectorAll('input[id="qr_code_name"]').forEach(input => input.remove());
+                document.querySelectorAll('label[for="qr_code_name"]').forEach(label => label.remove());
+                const selectedForm = document.getElementById(formId);
+                selectedForm.classList.remove('hidden');
+
+                const nameInput =
+                    '<label for="qr_code_name" class="block text-blue-500 font-semibold mb-2">Tên mã QR</label>' +
+                    '<input type="text" id="qr_code_name" placeholder="Tên QR" class="w-full border border-gray-300 rounded px-4 py-2 mb-4">';
+
+                selectedForm.insertAdjacentHTML('afterbegin', nameInput);
 
                 // Cập nhật kiểu nút để đánh dấu form đã chọn
                 document.querySelectorAll('#menuButtons button').forEach(btn => {
@@ -242,6 +261,7 @@
             function generateQRCode(type) {
                 let formData = new FormData();
                 formData.append('type', type);
+                formData.append('qr_code_name', document.getElementById('qr_code_name').value);
 
                 switch (type) {
                     case 'URL':
@@ -279,14 +299,37 @@
                         formData.append('wifi_encryption', document.getElementById('encryptionType').value);
                         break;
 
-                    // case 'Image':
-                    //     const imageFile = document.getElementById('imageFileInput').files[0];
-                    //     formData.append('image', imageFile);
-                    //     break;
                     case 'Bank':
                         formData.append('bank_acq_id', document.getElementById('bankAcqId').value);
                         formData.append('bank_account_no', document.getElementById('bankAccountNo').value);
                         formData.append('bank_account_name', document.getElementById('bankAccountName').value);
+                        break;
+
+                    case 'File':
+                        let fileUpload = document.getElementById('file_upload');
+
+                        if (fileUpload.files.length === 0) {
+                            alert("Vui lòng chọn một tệp tin trước khi tạo QR code!");
+                            return;
+                        }
+
+                        let file = fileUpload.files[0];
+                        let allowedTypes = [
+                            "image/png", "image/jpeg", "image/jpg", "image/gif",
+                            "application/pdf",
+                            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", // .xlsx
+                            "application/vnd.ms-excel", // .xls
+                            "application/vnd.openxmlformats-officedocument.wordprocessingml.document", // .docx
+                            "application/msword" // .doc
+                        ];
+
+                        if (!allowedTypes.includes(file.type)) {
+                            alert("Loại tệp không hợp lệ! Chỉ chấp nhận hình ảnh, PDF, Excel, hoặc Word.");
+                            return;
+                        }
+
+                        formData.append('file_upload', file);
+                        formData.append('file_category', document.getElementById('file_category').value);
                         break;
 
                     default:
@@ -310,65 +353,6 @@
                     .then(response => response.json())
                     .then(data => handleQRCodeResponse(data))
                     .catch(error => handleError(error));
-            }
-
-            function prepareRequestData(type) {
-                let requestData = { type };
-
-                switch (type) {
-                    case 'URL':
-                        requestData.url = document.getElementById('websiteInput').value;
-                        break;
-
-                    case 'Vcard':
-                        requestData.vcard_name = document.getElementById('vcardName').value;
-                        requestData.vcard_lastname = document.getElementById('vcardLastname').value;
-                        requestData.vcard_email = document.getElementById('vcardEmail').value;
-                        break;
-
-                    case 'Email':
-                        requestData.email_address = document.getElementById('emailAddress').value;
-                        requestData.email_subject = document.getElementById('emailSubject').value;
-                        requestData.email_body = document.getElementById('emailBody').value;
-                        break;
-
-                    case 'Phone':
-                        requestData.phone_number = document.getElementById('phoneOnlyInput').value;
-                        break;
-
-                    case 'SMS':
-                        requestData.phone_number = document.getElementById('smsPhoneNumber').value;
-                        requestData.sms_content = document.getElementById('smsContentInput').value;
-                        break;
-
-                    case 'Docs':
-                        requestData.docs_content = document.getElementById('docsContentInput').value;
-                        break;
-
-                    case 'Wifi':
-                        requestData.wifi_name = document.getElementById('nameWifi').value;
-                        requestData.wifi_password = document.getElementById('passwordWifi').value;
-                        requestData.wifi_encryption = document.getElementById('encryptionType').value; // Loại mã hóa
-                        break;
-
-                    // case 'Image':
-                    //     const imageFileInput = document.getElementById('imageFileInput');
-                    //     const imageFile = imageFileInput.files && imageFileInput.files[0];
-                    //     if (imageFile) {
-                    //         requestData.image = imageFile; // File hình ảnh (sẽ gửi dạng multipart/form-data nếu cần)
-                    //     } else {
-                    //         console.error('Chưa chọn file hình ảnh');
-                    //         return null;
-                    //     }
-                    //     break;
-
-
-                    default:
-                        console.error('Invalid type');
-                        return null;
-                }
-
-                return requestData;
             }
 
             function handleQRCodeResponse(data) {

@@ -5,6 +5,23 @@
     <div>
         <!-- Tiêu đề -->
         <div class="font-bold text-2xl text-center mb-5">Quản lý mã QR</div>
+        <div class="flex justify-end my-2">
+            <form method="GET" action="{{ route('admin.qrcodes.index') }}" class="flex flex-wrap items-center gap-4">
+                <div>
+                    <label for="qr_code_name" class="block text-sm font-medium text-gray-700">Tên mã QR</label>
+                    <input type="text" name="qr_code_name" id="qr_code_name" value="{{ request('qr_code_name') }}"
+                           class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                           placeholder="Tìm theo tên mã QR">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">&nbsp;</label>
+                    <button type="submit"
+                            class="bg-indigo-600 text-white mt-1 py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50">
+                        Tìm kiếm
+                    </button>
+                </div>
+            </form>
+        </div>
 
         <!-- Danh sách QR Codes -->
         <div x-data="{ showModal: false, qrData: {} }" class="overflow-x-auto shadow-md rounded-lg">
@@ -13,6 +30,7 @@
                 <tr>
                     <th class="px-6 py-3 text-start text-xs font-medium text-gray-700 uppercase">Hình ảnh</th>
                     <th class="px-6 py-3 text-start text-xs font-medium text-gray-700 uppercase">Loại mã QR</th>
+                    <th class="px-6 py-3 text-start text-xs font-medium text-gray-700 uppercase">Tên mã QR</th>
                     <th class="px-6 py-3 text-start text-xs font-medium text-gray-700 uppercase">Người dùng</th>
                     <th class="px-6 py-3 text-start text-xs font-medium text-gray-700 uppercase">Ngày tạo</th>
                     <th class="px-6 py-3 text-start text-xs font-medium text-gray-700 uppercase">Hành động</th>
@@ -31,6 +49,7 @@
                                         id: '{{ $qrcode->id }}',
                                         image: '{{ Storage::url($qrcode->qr_code_path) }}',
                                         type: '{{ ucfirst($qrcode->type) }}',
+                                        qr_code_name: '{{ $qrcode->qr_code_name }}',
                                         user: '{{ optional($qrcode->user)->name ?? 'Không xác định' }}',
                                         created_at: '{{ $qrcode->created_at->format('d/m/Y H:i') }}',
                                         phone_number: '{{ $qrcode->phone_number }}',
@@ -40,6 +59,8 @@
                                 </td>
                                 <!-- Loại mã QR -->
                                 <td class="px-6 py-4">{{ ucfirst($qrcode->type) }}</td>
+                                <!-- Tên mã QR -->
+                                <td class="px-6 py-4">{{ $qrcode->qr_code_name }}</td>
                                 <!-- Người dùng -->
                                 <td class="px-6 py-4">{{ optional($qrcode->user)->name ?? 'Không xác định' }}</td>
                                 <!-- Ngày tạo -->
@@ -83,6 +104,7 @@
                         <div class="text-left w-full">
                             <h3 class="text-lg font-bold mb-2 text-center">Thông tin chi tiết mã QR</h3>
                             <p><strong>Loại mã QR:</strong> <span x-text="qrData.type"></span></p>
+                            <p><strong>Tên mã QR:</strong> <span x-text="qrData.qr_code_name"></span></p>
 
                             <!-- Hiển thị thông tin theo từng loại mã QR -->
                             <template x-if="qrData.type === 'Vcard'">
@@ -107,9 +129,11 @@
                             </template>
 
                             <template x-if="qrData.type === 'Email'">
-                                <p><strong>Email:</strong><span x-text="qrData.email_address"></span> </p>
-                                <p><strong>Tiêu đề:</strong><span x-text="qrData.email_subject"></span> </p>
-                                <p><strong>Nội dung:</strong><span x-text="qrData.email_body"></span> </p>
+                                <div>
+                                    <p><strong>Email:</strong><span x-text="qrData.email_address"></span> </p>
+                                    <p><strong>Tiêu đề:</strong><span x-text="qrData.email_subject"></span> </p>
+                                    <p><strong>Nội dung:</strong><span x-text="qrData.email_body"></span> </p>
+                                </div>
                             </template>
                             <template x-if="qrData.type === 'Wifi'">
                                 <div>
@@ -118,7 +142,12 @@
                                     <p><strong>Loại mã hóa:</strong> <span x-text="qrData.wifi_encryption"></span></p>
                                 </div>
                             </template>
-
+                            <template x-if="qrData.type === 'File'">
+                                <div>
+                                    <p><strong>Loại tệp tin:</strong><span x-text="qrData.file_category"></span> </p>
+                                    <p><strong>URL:</strong> <a :href="qrData.url" target="_blank" class="text-blue-500 hover:underline" x-text="qrData.url"></a></p>
+                                </div>
+                            </template>
                             <!-- Hiển thị thông tin Văn bản -->
                             <template x-if="qrData.type === 'Docs'">
                                 <div>

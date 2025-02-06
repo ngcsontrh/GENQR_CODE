@@ -30,6 +30,8 @@ class QRCode extends Model
         'bank_acq_id',
         'bank_account_no',
         'bank_account_name',
+        'qr_code_name',
+        'file_category',
         ''
     ];
     public function user()

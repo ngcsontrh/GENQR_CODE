@@ -9,8 +9,14 @@ use Illuminate\Support\Facades\Storage;
 
 class QRCodesController extends Controller
 {
-    public function index() {
-        $qrcodes = QRCode::with('user')->orderBy('created_at', 'desc')->paginate(10);
+    public function index(Request $request) {
+        $qrcodeName = $request->input('qr_code_name');
+
+        $qrcodes = QRCode::query();
+        if ($qrcodeName) {
+            $qrcodes = $qrcodes->where('qr_code_name', 'like', '%' . $qrcodeName . '%');
+        }
+        $qrcodes = $qrcodes->with('user')->orderBy('created_at', 'desc')->paginate(10);
         return view('admins.qrcodes.index', compact('qrcodes'));
     }
     public function destroy($id)

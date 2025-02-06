@@ -106,6 +106,36 @@ class QRCodeController extends Controller
                     'accountName' => $request->input('bank_account_name'),
                     'template' => 'qr_only'
                 ];
+
+            case 'File':
+                // Lấy danh mục file từ request
+                $fileCategory = $request->input('file_category');
+
+                // Lấy file từ request
+                if ($request->hasFile('file_upload')) {
+                    $fileUpload = $request->file('file_upload');
+
+                    // Sinh tên file mới
+                    $fileName = time() . '.' . $fileUpload->getClientOriginalExtension();
+
+                    // Định nghĩa đường dẫn lưu file trong storage
+                    $filePath = 'users/' . $fileName;
+
+                    // Lưu file vào storage (public disk)
+                    Storage::put('public/' . $filePath, file_get_contents($fileUpload));
+
+                    // Lấy URL của file đã lưu
+                    $fileUrl = url(Storage::url($filePath));
+                    $request->merge(['url' => $fileUrl]);
+
+                    return "File type: {$fileUpload->getClientOriginalExtension()}\n" .
+                        "Category: {$fileCategory}\n" . // Danh mục file
+                        "URL: {$fileUrl}"; // Url dẫn tới file
+                }
+                else {
+                    return '';
+                }
+
             default:
                 return null;
         }
@@ -143,6 +173,7 @@ class QRCodeController extends Controller
         QRCode::create([
             'user_id' => $user ? $user->id : null,
             'type' => $type,
+            'qr_code_name' => $request->input('qr_code_name'), // Tên mã QR
             'qr_code_path' => $filePath,
             'unique_id' => $uniqueId, // Lưu unique_id
             'url' => $request->input('url'),
@@ -161,6 +192,7 @@ class QRCodeController extends Controller
             'bank_acq_id' => $request->input('bank_acq_id'), // Mã ngân hàng
             'bank_account_no' => $request->input('bank_account_no'), // STK ngân hàng
             'bank_account_name' => $request->input('bank_account_name'), // Tên tài khoản ngân hàng
+            'file_category' => $request->input('file_category'), // Danh mục file
         ]);
     }
 

@@ -95,51 +95,62 @@
             if (decodedText.startsWith('WIFI:')) {
                 const wifiInfo = parseWiFi(decodedText);
                 return `
-                <p><strong>Wi-Fi Network:</strong></p>
-                <p>SSID: ${wifiInfo.ssid}</p>
-                <p>Encryption: ${wifiInfo.encryption}</p>
-                <p>Password: ${wifiInfo.password}</p>
+                <p class="text-xl"><strong>Wi-Fi Network:</strong></p>
+                <p><strong>SSID:</strong> ${wifiInfo.ssid}</p>
+                <p><strong>Encryption:</strong> ${wifiInfo.encryption}</p>
+                <p><strong>Password:</strong> ${wifiInfo.password}</p>
             `;
             }
 
             if (decodedText.startsWith('SMSTO:')) {
                 const smsInfo = parseSMS(decodedText);
                 return `
-                <p><strong>SMS:</strong></p>
-                <p>Phone: ${smsInfo.phone}</p>
-                <p>Message: ${smsInfo.message}</p>
+                <p class="text-xl"><strong>SMS:</strong></p>
+                <p><strong>Phone:</strong> ${smsInfo.phone}</p>
+                <p><strong>Message:</strong> ${smsInfo.message}</p>
             `;
             }
 
             if (decodedText.startsWith('TEL:') || decodedText.startsWith('tel:')) {
                 const phone = decodedText.slice(decodedText.indexOf(':') + 1);
-                return `<p><strong>Telephone:</strong> ${phone}</p>`;
+                return `<p class="text-xl"><strong>Telephone:</strong> ${phone}</p>`;
             }
 
             if (decodedText.startsWith('mailto:')) {
                 const emailInfo = parseEmail(decodedText);
                 return `
-                <p><strong>Email:</strong></p>
-                <p>To: ${emailInfo.to}</p>
-                <p>Subject: ${emailInfo.subject}</p>
-                <p>Body: ${emailInfo.body}</p>
+                <p class="text-xl"><strong>Email:</strong></p>
+                <p><strong>To:</strong> ${emailInfo.to}</p>
+                <p><strong>Subject:</strong> ${emailInfo.subject}</p>
+                <p><strong>Body:</strong> ${emailInfo.body}</p>
             `;
             }
 
-            if (decodedText.includes('BEGIN:VCARD')) {
+            if (decodedText.startsWith('BEGIN:VCARD')) {
                 const vCardInfo = parseVCard(decodedText);
                 return `
-                <p><strong>vCard Information:</strong></p>
-                <p>Full Name: ${vCardInfo.fullName}</p>
-                <p>Email: ${vCardInfo.email}</p>
+                <p class="text-xl"><strong>vCard Information:</strong></p>
+                <p><strong>Full Name:</strong> ${vCardInfo.fullName}</p>
+                <p><strong>Email:</strong> ${vCardInfo.email}</p>
             `;
+            }
+
+            if (decodedText.startsWith('File type:')) {
+                const fileInfo = parseFile(decodedText);
+                return `
+                <p class="text-xl"><strong>File Information:</strong></p>
+                <p><strong>Type:</strong> ${fileInfo.type}</p>
+                <p><strong>Category:</strong> ${fileInfo.category}</p>
+                <p><strong>URL:</strong> <a href="${fileInfo.url}" class="text-blue-600" target="_blank">${fileInfo.url}</a></p>`
             }
 
             if (decodedText.startsWith('http://') || decodedText.startsWith('https://')) {
-                return `<p><strong>Website:</strong> <a href="${decodedText}" target="_blank">${decodedText}</a></p>`;
+                return `<p><strong class="text-xl">Website:</strong></p>
+                        <p><strong>URL</strong> <a href="${decodedText}" target="_blank" class="text-blue-600">${decodedText}</a></p>`;
             }
 
-            return `<p><strong>Plain Text:</strong> ${decodedText}</p>`;
+            return `<p class="text-xl"><strong>Plain Text:</strong></p>
+                    <p>${decodedText}</p>`;
         }
 
         function parseWiFi(text) {
@@ -201,6 +212,28 @@
             return {
                 fullName: vCardInfo.fullName || 'N/A',
                 email: vCardInfo.email || 'N/A'
+            };
+        }
+
+        function parseFile(text) {
+            const lines = text.split(/\r?\n/);
+            const fileInfo = {};
+
+            lines.forEach(line => {
+                if (line.startsWith('File type:')) {
+                    fileInfo.type = line.slice(10).trim();
+                }
+                if (line.startsWith('Category:')) {
+                    fileInfo.category = line.slice(9).trim();
+                } else if (line.startsWith('URL:')) {
+                    fileInfo.url = line.slice(4).trim();
+                }
+            });
+
+            return {
+                type: fileInfo.type,
+                category: fileInfo.category || 'N/A',
+                url: fileInfo.url
             };
         }
 

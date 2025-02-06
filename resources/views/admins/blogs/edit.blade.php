@@ -57,7 +57,7 @@
                         </div>
                     </div>
                     <div class="flex justify-center mt-7">
-                        <button id="editblog" type="submit" class="py-3 px-4 w-36 mb-5 inline-flex justify-center font-bold items-center gap-x-2 rounded-full border border-transparent bg-green-500 text-white hover:bg-green-700 cursor-pointer">
+                        <button id="editblog" type="submit" class="py-3 px-4 w-28 mb-2 inline-flex justify-center font-bold items-center gap-x-2 rounded-full border border-transparent bg-green-500 text-white hover:bg-green-700 cursor-pointer">
                             Chỉnh sửa blog
                         </button>
                     </div>
