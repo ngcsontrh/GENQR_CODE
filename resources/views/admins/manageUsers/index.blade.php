@@ -4,7 +4,36 @@
     </x-slot>
     <div>
         <div class="font-bold text-2xl text-center">Quản lý tài khoản người dùng</div>
-        <div class="flex flex-col mt-5">
+        <div class="flex justify-end mt-2">
+            <form method="GET" action="{{ route('admin.manageUsers.index') }}" class="flex flex-wrap items-center gap-4">
+                <div>
+                    <label for="name" class="block text-sm font-medium text-gray-700">Tên</label>
+                    <input type="text" name="name" id="name" value="{{ request('name') }}"
+                           class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                           placeholder="Tìm theo tên">
+                </div>
+                <div>
+                    <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                    <input type="text" name="email" id="email" value="{{ request('email') }}"
+                           class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                           placeholder="Tìm theo email">
+                </div>
+                <div>
+                    <label for="phone" class="block text-sm font-medium text-gray-700">Số điện thoại</label>
+                    <input type="text" name="phone" id="phone" value="{{ request('phone') }}"
+                           class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                           placeholder="Tìm theo số điện thoại">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">&nbsp;</label>
+                    <button type="submit"
+                            class="bg-indigo-600 text-white mt-1 py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50">
+                        Tìm kiếm
+                    </button>
+                </div>
+            </form>
+        </div>
+        <div class="flex flex-col">
             <div class="-m-1.5 overflow-x-auto [&::-webkit-scrollbar]:h-1 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-blue-300">
                 <div class="mt-5 p-1.5 min-w-full inline-block align-middle">
                     <div class="">
