@@ -109,7 +109,7 @@
             <!-- Form cho Website -->
             <div id="websiteForm" class="form-container">
                 <label for="qr_code_name" class="block text-blue-500 font-semibold mb-2">Tên mã QR</label>
-                <input type="text" id="qr_code_name" placeholder="Tên QR" class="w-full border border-gray-300 rounded px-4 py-2 mb-4 focus:outline-none focus:ring-2">
+                <input type="text" id="qr_code_name" placeholder="Đặt tên cho QR của bạn (không bắt buộc)" class="w-full border border-gray-300 rounded px-4 py-2 mb-4 focus:outline-none focus:ring-2">
                 <label class="block text-blue-500 font-semibold mb-2">Nhập website (URL)</label>
                 <input type="text" id="websiteInput" placeholder="https://www.qrcode-gen.com" class="w-full border border-gray-300 rounded px-4 py-2 mb-4 focus:outline-none focus:ring-2">
                 <button onclick="generateQRCode('URL')" class="bg-purple-500 text-white px-6 py-2 rounded shadow hover:bg-purple-600 flex items-center mx-auto">
@@ -247,7 +247,7 @@
 
                 const nameInput =
                     '<label for="qr_code_name" class="block text-blue-500 font-semibold mb-2">Tên mã QR</label>' +
-                    '<input type="text" id="qr_code_name" placeholder="Tên QR" class="w-full border border-gray-300 rounded px-4 py-2 mb-4">';
+                    '<input type="text" id="qr_code_name" placeholder="Đặt tên cho QR của bạn (không bắt buộc)" class="w-full border border-gray-300 rounded px-4 py-2 mb-4">';
 
                 selectedForm.insertAdjacentHTML('afterbegin', nameInput);
 
