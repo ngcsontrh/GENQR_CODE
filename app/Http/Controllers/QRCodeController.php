@@ -253,6 +253,32 @@ class QRCodeController extends Controller
         $user = auth()->user();
         $qrcodes = QRCode::where('user_id', $user->id)->orderBy('created_at', 'desc')->paginate(6);
 
+        // Gọi API lấy danh sách ngân hàng
+        try {
+            $response = Http::withOptions([
+                'verify' => false,
+            ])->get("https://api.vietqr.io/v2/banks");
+            $bankData = $response->json();
+
+            // Tạo map ngân hàng
+            $bankMap = [];
+            foreach ($bankData['data'] as $bank) {
+                $bankMap[$bank['bin']] = $bank['name'] . ' - ' . $bank['shortName'];
+            }
+
+            // Gán tên ngân hàng vào từng bản ghi
+            foreach ($qrcodes as $qrcode) {
+                if ($qrcode->type === 'Bank') {
+                    $qrcode->bank_acq_name = $bankMap[$qrcode->bank_acq_id];
+                }
+            }
+        } catch (\Exception $e) {
+            // Nếu lỗi API, gán giá trị mặc định
+            foreach ($qrcodes as $qrcode) {
+                $qrcode->bank_acq_name = 'Không xác định';
+            }
+        }
+
         return view('qr_history', compact('qrcodes'));
     }
 

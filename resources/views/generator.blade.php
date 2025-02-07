@@ -235,7 +235,7 @@
         </div>
     </div>
 
-    <x-slot name="script">4
+    <x-slot name="script">
         <script>
             function showForm(formId, button) {
                 // Ẩn tất cả các form và hiển thị form đã chọn
@@ -474,7 +474,7 @@
                         data.data.forEach(bank => {
                             const option = document.createElement('option');
                             option.value = bank.bin;
-                            option.textContent = bank.name;
+                            option.textContent = `${bank.name} - ${bank.shortName}`;
                             bankSelect.appendChild(option);
                         });
 

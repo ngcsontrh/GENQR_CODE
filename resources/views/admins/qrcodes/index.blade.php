@@ -54,7 +54,14 @@
                                         created_at: '{{ $qrcode->created_at->format('d/m/Y H:i') }}',
                                         phone_number: '{{ $qrcode->phone_number }}',
                                         sms_content: '{{ $qrcode->sms_content }}',
-                                        url: '{{ $qrcode->url }}'
+                                        url: '{{ $qrcode->url }}',
+                                        bank_acq_name: '{{ $qrcode->bank_acq_name }}',
+                                        bank_account_no: '{{ $qrcode->bank_account_no }}',
+                                        bank_account_name: '{{ $qrcode->bank_account_name }}',
+                                        email_address: '{{ $qrcode->email_address }}',
+                                        email_subject: '{{ $qrcode->email_subject }}',
+                                        email_body: '{{ $qrcode->email_body }}',
+                                        file_category: '{{ $qrcode->file_category }}'
                                     }">
                                 </td>
                                 <!-- Loại mã QR -->
@@ -130,9 +137,9 @@
 
                             <template x-if="qrData.type === 'Email'">
                                 <div>
-                                    <p><strong>Email:</strong><span x-text="qrData.email_address"></span> </p>
-                                    <p><strong>Tiêu đề:</strong><span x-text="qrData.email_subject"></span> </p>
-                                    <p><strong>Nội dung:</strong><span x-text="qrData.email_body"></span> </p>
+                                    <p><strong>Email: </strong><span x-text="qrData.email_address"></span> </p>
+                                    <p><strong>Tiêu đề: </strong><span x-text="qrData.email_subject"></span> </p>
+                                    <p><strong>Nội dung: </strong><span x-text="qrData.email_body"></span> </p>
                                 </div>
                             </template>
                             <template x-if="qrData.type === 'Wifi'">
@@ -152,6 +159,13 @@
                             <template x-if="qrData.type === 'Docs'">
                                 <div>
                                     <p><strong>Văn bản:</strong> <span x-text="qrData.docs_content"></span></p>
+                                </div>
+                            </template>
+                            <template x-if="qrData.type === 'Bank'">
+                                <div>
+                                    <p><strong>Ngân hàng:</strong> <span x-text="qrData.bank_acq_name"></span></p>
+                                    <p><strong>Số tài khoản:</strong> <span x-text="qrData.bank_account_no"></span></p>
+                                    <p><strong>Tên tài khoản:</strong> <span x-text="qrData.bank_account_name"></span></p>
                                 </div>
                             </template>
                             <p><strong>Ngày tạo:</strong> <span x-text="qrData.created_at"></span></p>
