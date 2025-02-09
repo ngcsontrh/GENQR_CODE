@@ -3,30 +3,29 @@
         Quản lý blogs
     </x-slot>
     <div>
-        <div class="font-bold text-2xl text-center">Quản lý Blogs</div>
+        <div class="font-bold text-3xl mt-1 text-center uppercase">Quản lý bài viết</div>
         <div class="flex flex-col mt-5">
             <div class="-m-1.5 overflow-x-auto [&::-webkit-scrollbar]:h-1 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-blue-300">
-                <div class="p-1.5 min-w-full inline-block align-middle">
+                <div class="mt-2 p-1.5 min-w-full inline-block align-middle">
                     <div class="flex justify-between flex-wrap my-2">
-                        <div>
-                            <span>&nbsp;</span>
-                            <a href="{{ route('admin.blogs.create') }}" class="flex p-2 bg-blue-300 rounded text-blue-800 font-semiboldbold">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="w-5 h-5 fill-current text-blue-800">
-                                    <path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"/></svg>
-                                Bài viết mới
-                            </a>
+                        <div class="flex flex-wrap items-center gap-4">
+                            <div>
+                                <a href="{{ route('admin.blogs.create') }}" class="flex p-2 bg-blue-300 rounded text-blue-800 font-semiboldbold">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="w-5 h-5 fill-current text-blue-800">
+                                        <path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"/></svg>
+                                    Bài viết mới
+                                </a>
+                            </div>
                         </div>
                         <form method="GET" action="{{ route('admin.blogs.index') }}" class="flex flex-wrap items-center gap-4">
                             <div>
-                                <label for="title" class="block text-sm font-medium text-gray-700">Tiêu đề</label>
                                 <input type="text" name="title" id="title" value="{{ request('title') }}"
-                                       class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                                       placeholder="Tìm theo tiêu đề">
+                                       class="p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                                       placeholder="Tìm theo tiêu đề" />
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-gray-700">&nbsp;</label>
                                 <button type="submit"
-                                        class="bg-indigo-600 text-white mt-1 py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50">
+                                        class="bg-green-500 text-white hover:bg-green-700 py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-opacity-50">
                                     Tìm kiếm
                                 </button>
                             </div>

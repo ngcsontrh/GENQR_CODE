@@ -3,10 +3,10 @@
         Đọc mã QR
     </x-slot>
 
-    <ol class="flex items-center whitespace-nowrap lg:px-12 mx-4 mt-10">
+    <ol class="flex items-center whitespace-nowrap lg:px-12 mx-4 mt-10 text-md">
         <li class="inline-flex items-center">
             <a href="{{ route('home') }}"
-               class="flex items-center text-sm text-gray-500 hover:text-blue-600 focus:outline-none focus:text-blue-600 dark:text-neutral-500 dark:hover:text-blue-500 dark:focus:text-blue-500">
+               class="flex items-center text-gray-500 hover:text-blue-600 focus:outline-none focus:text-blue-600 dark:text-neutral-500 dark:hover:text-blue-500 dark:focus:text-blue-500">
                 <svg class="shrink-0 me-3 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                      viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                      stroke-linecap="round" stroke-linejoin="round">
@@ -21,13 +21,18 @@
                 <path d="m9 18 6-6-6-6"></path>
             </svg>
         </li>
-        <li class="inline-flex items-center text-sm text-amber-700 truncate dark:text-neutral-200" aria-current="page">
+        <li class="inline-flex items-center text-amber-700 truncate dark:text-neutral-200" aria-current="page">
             Đọc mã QR
         </li>
     </ol>
 
-    <div class="flex flex-col md:flex-row justify-between items-start md:space-x-4 p-6 xl:mx-40">
-        <div class="w-full p-6 bg-white border rounded-xl shadow-xl flex flex-col items-center">
+    <!-- Tiêu đề -->
+    <h2 class="mx-auto text-center font-bold text-4xl text-green-600 mt-6 lg:mt-8 uppercase">
+        Đọc mã QR
+    </h2>
+
+    <div class="flex flex-col lg:flex-row justify-between items-start lg:space-x-4 p-6 xl:mx-40">
+        <div class="w-full xl:w-3/5 p-6 bg-white border rounded-xl shadow-xl flex flex-col items-center">
             <div id="qrResultContainer" class="w-full p-6 bg-white border rounded-xl shadow-xl mt-4 h-96 relative">
                 <div id="qrResult">
                     <p class="text-center text-gray-700">
@@ -44,7 +49,7 @@
             </div>
         </div>
 
-        <div class="w-full md:w-1/3 p-6 bg-white border rounded-xl shadow-xl flex flex-col items-center">
+        <div class="w-full xl:w-2/5 p-6 bg-white border rounded-xl shadow-xl flex flex-col items-center">
             <div id="qrCodeContainer" class="w-auto bg-gray-200 mb-4 flex rounded-3xl justify-center items-center relative h-80">
                 <!-- Preview image placeholder -->
                 <img id="qrImage"

@@ -4,9 +4,9 @@
     </x-slot>
 
     <!-- Breadcrumb -->
-    <ol class="flex items-center whitespace-nowrap lg:px-48 mx-4">
+    <ol class="flex items-center whitespace-nowrap lg:px-48 mx-4 text-md">
         <li class="inline-flex items-center">
-            <a href="{{ route('home') }}" class="flex items-center text-sm text-gray-500 hover:text-blue-600 dark:text-neutral-500">
+            <a href="{{ route('home') }}" class="flex items-center text-gray-500 hover:text-blue-600 dark:text-neutral-500">
                 <svg class="shrink-0 mr-2 w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
                     <polyline points="9 22 9 12 15 12 15 22"></polyline>
@@ -18,7 +18,7 @@
             </svg>
         </li>
         <li class="inline-flex items-center">
-            <a href="{{ route('blog') }}" class="text-sm text-gray-500 hover:text-blue-600 dark:text-neutral-500">
+            <a href="{{ route('blog') }}" class="text-gray-500 hover:text-blue-600 dark:text-neutral-500">
                 Bài viết
             </a>
             <svg class="mx-2 w-4 h-4 text-gray-400 dark:text-neutral-600" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

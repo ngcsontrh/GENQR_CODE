@@ -3,9 +3,9 @@
         Lịch sử tạo mã QR
     </x-slot>
 
-    <ol class="flex items-center whitespace-nowrap lg:px-12 mx-4 mt-10">
+    <ol class="flex items-center whitespace-nowrap lg:px-12 mx-4 mt-10 text-md">
         <li class="inline-flex items-center">
-            <a href="{{ route('home') }}" class="flex items-center text-sm text-gray-500 hover:text-blue-600 focus:outline-none focus:text-blue-600 dark:text-neutral-500 dark:hover:text-blue-500 dark:focus:text-blue-500" >
+            <a href="{{ route('home') }}" class="flex items-center text-gray-500 hover:text-blue-600 focus:outline-none focus:text-blue-600 dark:text-neutral-500 dark:hover:text-blue-500 dark:focus:text-blue-500" >
                 <svg class="shrink-0 me-3 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                     <polyline points="9 22 9 12 15 12 15 22"></polyline>
@@ -17,14 +17,17 @@
             </svg>
         </li>
 
-        <li class="inline-flex items-center text-sm text-amber-700 truncate dark:text-neutral-200" aria-current="page">
+        <li class="inline-flex items-center text-amber-700 truncate dark:text-neutral-200" aria-current="page">
             Lịch sử tạo mã
         </li>
     </ol>
 
-    <div class="container mx-auto px-4 py-6">
-        <h2 class="text-2xl font-semibold text-center mb-6">Lịch sử tạo mã QR</h2>
+    <!-- Tiêu đề -->
+    <h2 class="mx-auto text-center font-bold text-4xl text-green-600 mt-6 lg:mt-8 uppercase">
+        Lịch sử tạo mã QR
+    </h2>
 
+    <div class="container mx-auto px-4 py-6">
         @if($qrcodes->isEmpty())
             <div class="text-center text-gray-500 min-h-96 flex items-center justify-center">
                 <p class="">Bạn chưa tạo mã QR nào.</p>
@@ -79,20 +82,18 @@
                             <!-- Nút Xóa -->
                             <td class="px-6 py-4">
                                 <a href="{{ Storage::url($qrcode->qr_code_path) }}" download class="inline-block bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-700">
-                                    <i class="fa-solid fa-download mr-2"></i>
-                                    Tải xuống
+                                    <i class="fa-solid fa-download"></i>
                                 </a>
 
                                 <a href="{{ route('qr.edit', ['unique_id' => $qrcode->unique_id]) }}" class="inline-block text-white bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-lg">
-                                    <i class="fa-solid fa-pen-to-square mr-2"></i>
-                                    Chỉnh sửa
+                                    <i class="fa-solid fa-pen-to-square"></i>
                                 </a>
 
                                 <form class="inline-block" action="{{ route('qrcodes.destroy', $qrcode->id) }}" method="POST" onsubmit="return confirm('Bạn có chắc muốn xóa mã QR này không?');">
                                     @csrf
                                     @method('DELETE')
                                     <button class="text-white bg-red-500 hover:bg-red-600 px-4 py-2 rounded-lg">
-                                        <i class="fa-solid fa-trash-can mr-2"></i>Xóa
+                                        <i class="fa-solid fa-trash-can"></i>
                                     </button>
                                 </form>
                             </td>

@@ -9,18 +9,12 @@ class ContactsController extends Controller
 {
     public function index(Request $request)
     {
-        $name = $request->input('name');
-        $email = $request->input('email');
-        $phone = $request->input('phone');
+        $search = $request->get('search');
         $contacts = Contact::query();
-        if ($name) {
-            $contacts->where('name', 'like', '%' . $name . '%');
-        }
-        if ($email) {
-            $contacts->where('email', 'like', '%' . $email . '%');
-        }
-        if ($phone) {
-            $contacts->where('phone', 'like', '%' . $phone . '%');
+        if ($search) {
+            $contacts = $contacts->where('name', 'like', '%' . $search . '%')
+                ->orWhere('email', 'like', '%' . $search . '%')
+                ->orWhere('phone', 'like', '%' . $search . '%');
         }
         $contacts = $contacts->orderBy('created_at','desc')->paginate(5);
         return view('admins.contacts.index', compact('contacts'));

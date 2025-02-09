@@ -120,35 +120,26 @@
     </div>
     <div class="border border-amber-200 w-full lg:w-auto">
         <div class="flex flex-col lg:flex-row gap-y-4 lg:gap-x-20 px-4 lg:px-20 pt-2 justify-between">
-            <a href="/" class="p-2 hover:bg-gray-300 flex">
-                <i class="fa-solid fa-house mr-3"></i>
-                Trang chủ
-            </a>
-            <a href="{{ route('generator') }}" class="p-2 hover:bg-gray-300 flex items-center justify-between">
+            <a href="{{ route('admin.blogs.index') }}" class="p-2 hover:bg-gray-300 flex items-center justify-between">
                 <span class="flex items-center">
-                    <i class="fas fa-qrcode mr-3"></i>
-                    Tạo mã QR
+                    <i class="fa-brands fa-twitter mr-3"></i> Quản lý bài viết
                 </span>
             </a>
 
-            <a href="{{ route('qr.history') }}" class="p-2 hover:bg-gray-300 flex">
-                <i class="fa-solid fa-clock-rotate-left mr-3"></i>
-                Lịch sử tạo mã
+            <a href="{{ route('admin.contacts.index') }}" class="p-2 hover:bg-gray-300 flex">
+                <i class="fa-solid fa-file-signature mr-3"></i> Quản lý liên hệ
+            <a href="{{ route('admin.qrcodes.index') }}" class="p-2 hover:bg-gray-300 flex">
+                <i class="fas fa-qrcode mr-3"></i> Quản lý mã QR
             </a>
-            <a href="{{ route('blog') }}" class="p-2 hover:bg-gray-300 flex">
-                <i class="fa-brands fa-twitter mr-3"></i>
-                Bài viết
-            </a>
-            <a href="{{ route('contact') }}" class="p-2 hover:bg-gray-300 flex" >
-                <i class="fa-solid fa-file-signature mr-3"></i>
-                Liên hệ
+            <a href="{{ route('admin.manageUsers.index') }}" class="p-2 hover:bg-gray-300 flex" >
+                <i class="fas fa-user mr-3"></i>  Quản lý người dùng
             </a>
         </div>
     </div>
 </header>
 <div class="md:flex hidden">
     <!-- Sidebar (Fixed) -->
-    <div class="fixed top-0 left-0 h-screen w-48 flex bg-blue-950 text-white flex-col justify-between">
+    <div class="fixed top-0 left-0 h-screen w-52 flex bg-blue-950 text-white flex-col justify-between">
         <!-- Logo / Header -->
         <a class="flex flex-col items-center py-4 border-b border-blue-700">
             <img src="{{ asset('MyQR.jpg') }}" alt="QR Code Gen Logo" class="w-20 h-20 rounded-full">
@@ -196,22 +187,22 @@
                 <a href="{{ route('admin.blogs.index') }}"
                    class="flex items-center px-4 py-2 hover:bg-blue-700 {{ request()->is('admin/blogs') ? 'bg-blue-600' : '' }}"
                 >
-                    <i class="fas fa-qrcode mr-3"></i> Quản lý bài viết
+                    <i class="fa-brands fa-twitter mr-3"></i> Quản lý bài viết
                 </a>
                 <a href="{{ route('admin.contacts.index') }}"
                    class="flex items-center px-4 py-2 hover:bg-blue-700 {{ request()->is('admin/contacts') ? 'bg-blue-600' : '' }}"
                 >
-                    <i class="fas fa-qrcode mr-3"></i> Quản lý liên hệ
+                    <i class="fa-solid fa-file-signature mr-3"></i> Quản lý liên hệ
                 </a>
                 <a href="{{ route('admin.qrcodes.index') }}"
                    class="flex items-center px-4 py-2 hover:bg-blue-700 {{ request()->is('admin/qrcodes') ? 'bg-blue-600' : '' }}"
                 >
-                    <i class="fas fa-user mr-3"></i> Quản lý mã QR
+                    <i class="fas fa-qrcode mr-3"></i> Quản lý mã QR
                 </a>
                 <a href="{{ route('admin.manageUsers.index') }}"
                    class="flex items-center px-4 py-2 hover:bg-blue-700 {{ request()->is('admin/manage-users') ? 'bg-blue-600' : '' }}"
                 >
-                    <i class="fa-brands fa-twitter mr-3"></i> Quản lý người dùng
+                    <i class="fas fa-user mr-3"></i>  Quản lý người dùng
                 </a>
             </nav>
         </div>

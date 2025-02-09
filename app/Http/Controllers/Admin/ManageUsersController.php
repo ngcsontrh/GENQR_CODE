@@ -10,19 +10,13 @@ use App\Models\User;
 class ManageUsersController extends Controller
 {
     public function index(Request $request){
-        $name = $request->input('name');
-        $email = $request->input('email');
-        $phone = $request->input('phone');
+        $search = $request->input('search');
 
         $users = User::query();
-        if ($name) {
-            $users->where('name', 'like', '%' . $name . '%');
-        }
-        if ($email) {
-            $users->where('email', 'like', '%' . $email . '%');
-        }
-        if ($phone) {
-            $users->where('phone', 'like', '%' . $phone . '%');
+        if($search){
+            $users = $users->where('name', 'like', '%'.$search.'%')
+                ->orWhere('email', 'like', '%'.$search.'%')
+                ->orWhere('phone', 'like', '%'.$search.'%');
         }
         $users = $users->where('role', '!=', Role::Admin->value)
                         ->orderBy('id','desc')

@@ -3,9 +3,9 @@
         Tạo mã QR code miễn phí
     </x-slot>
 
-    <ol class="flex items-center whitespace-nowrap lg:px-12 mx-4 mt-10">
+    <ol class="flex items-center whitespace-nowrap lg:px-12 mx-4 mt-10 text-md">
         <li class="inline-flex items-center">
-            <a href="{{ route('home') }}" class="flex items-center text-sm text-gray-500 hover:text-blue-600 focus:outline-none focus:text-blue-600 dark:text-neutral-500 dark:hover:text-blue-500 dark:focus:text-blue-500" >
+            <a href="{{ route('home') }}" class="flex items-center text-gray-500 hover:text-blue-600 focus:outline-none focus:text-blue-600 dark:text-neutral-500 dark:hover:text-blue-500 dark:focus:text-blue-500" >
                 <svg class="shrink-0 me-3 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                     <polyline points="9 22 9 12 15 12 15 22"></polyline>
@@ -17,7 +17,7 @@
             </svg>
         </li>
 
-        <li class="inline-flex items-center text-sm text-amber-700 truncate dark:text-neutral-200" aria-current="page">
+        <li class="inline-flex items-center text-amber-700 truncate dark:text-neutral-200" aria-current="page">
             Tạo mã QR
         </li>
     </ol>
@@ -25,7 +25,7 @@
     <div class="flex flex-col md:flex-row justify-between items-start md:space-x-4 p-6 xl:mx-40">
         <!-- Form nhập thông tin -->
         <div class="w-full p-6 bg-white border rounded-xl shadow-xl">
-            <h2 class="font-bold text-2xl mb-5">Chọn loại mã QR</h2>
+            <h2 class="font-bold text-2xl mb-5 uppercase">Chọn loại mã QR</h2>
             <div id="menuButtons" class="grid grid-cols-2 gap-8 mb-4">
                 <button onclick="showForm('websiteForm', this)" class="font-bold text-white text-xl px-10 py-6 mb-2 border shadow-xl rounded-xl flex bg-purple-300 hover:text-purple-200 focus:text-white">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-7 h-7 mr-2 " fill="var(--template-selector-icon-main-color, #5D82D5)">
@@ -213,7 +213,7 @@
         </div>
 
         <!-- Placeholder hiển thị QR code -->
-        <div class="w-full md:w-1/3 p-6 bg-white border rounded-xl shadow-xl flex flex-col items-center">
+        <div class="w-full md:w-1/2 p-6 bg-white border rounded-xl shadow-xl flex flex-col items-center">
             <p class="bottom-0 mb-2 text-sm text-gray-700 bg-white bg-opacity-90 px-2 py-1 rounded-lg">
                 * Luôn quét để kiểm tra xem mã QR của bạn có hoạt động không
             </p>

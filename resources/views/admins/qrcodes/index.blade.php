@@ -4,23 +4,26 @@
     </x-slot>
     <div>
         <!-- Tiêu đề -->
-        <div class="font-bold text-2xl text-center mb-5">Quản lý mã QR</div>
-        <div class="flex justify-end my-2">
-            <form method="GET" action="{{ route('admin.qrcodes.index') }}" class="flex flex-wrap items-center gap-4">
-                <div>
-                    <label for="qr_code_name" class="block text-sm font-medium text-gray-700">Tên mã QR</label>
-                    <input type="text" name="qr_code_name" id="qr_code_name" value="{{ request('qr_code_name') }}"
-                           class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                           placeholder="Tìm theo tên mã QR">
+        <div class="font-bold text-3xl mt-1 text-center uppercase">Quản lý mã QR</div>
+        <div class="flex flex-col mt-5">
+            <div class="-m-1.5 overflow-x-auto [&::-webkit-scrollbar]:h-1 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-blue-300">
+                <div class="mt-2 p-1.5 min-w-full inline-block align-middle">
+                    <div class="flex justify-end my-2">
+                        <form method="GET" action="{{ route('admin.qrcodes.index') }}" class="flex flex-wrap items-center gap-4">
+                            <div>
+                                <input type="text" name="qr_code_name" id="qr_code_name" value="{{ request('qr_code_name') }}"
+                                       class="mt-1 p-2 block w-[19rem] border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                                       placeholder="Tìm theo tên mã QR">
+                            </div>
+                            <div>
+                                <button type="submit"
+                                        class="bg-green-500 text-white hover:bg-green-700 py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-opacity-50">                                    Tìm kiếm
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">&nbsp;</label>
-                    <button type="submit"
-                            class="bg-indigo-600 text-white mt-1 py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50">
-                        Tìm kiếm
-                    </button>
-                </div>
-            </form>
+            </div>
         </div>
 
         <!-- Danh sách QR Codes -->

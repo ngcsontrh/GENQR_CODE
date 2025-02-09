@@ -4,7 +4,7 @@
     </x-slot>
 
     <!-- Breadcrumb -->
-    <nav class="flex items-center lg:px-12 mx-4 mt-10 text-sm">
+    <nav class="flex items-center lg:px-12 mx-4 mt-10 text-md">
         <a href="{{ route('home') }}" class="flex items-center text-gray-500 hover:text-blue-600 dark:text-neutral-500 dark:hover:text-blue-500">
             <svg class="w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
@@ -64,7 +64,12 @@
 
         <!-- Preview QR Code -->
         <div class="bg-gray-50 dark:bg-gray-800 shadow-md rounded-lg p-6">
-            <h2 class="text-2xl font-semibold mb-6 text-gray-800 dark:text-gray-200 text-center">Xem trước mã QR</h2>
+            @if ($qrcode->qr_code_name)
+                <h2 class="text-2xl font-semibold mb-6 text-gray-800 dark:text-gray-200 text-center">{{ $qrcode->qr_code_name }}</h2>
+            @else
+                <h2 class="text-2xl font-semibold mb-6 text-gray-800 dark:text-gray-200 text-center">&nbsp;</h2>
+            @endif
+
             <div class="flex items-center justify-center">
                 <img src="{{ Storage::url($qrcode->qr_code_path) }}" alt="QR Code Preview" class="w-64 h-64 object-cover rounded-lg shadow-md">
             </div>

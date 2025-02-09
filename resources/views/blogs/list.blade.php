@@ -1,29 +1,29 @@
 
 <x-user-layout>
     <x-slot name="title">
-        Blog
+        Bài vết
     </x-slot>
 
-    <ol class="flex items-center whitespace-nowrap lg:px-12 mx-4 mt-10">
-                <li class="inline-flex items-center">
-                    <a href="{{ route('home') }}" class="flex items-center text-sm text-gray-500 hover:text-blue-600 focus:outline-none focus:text-blue-600 dark:text-neutral-500 dark:hover:text-blue-500 dark:focus:text-blue-500" >
-                        <svg class="shrink-0 me-3 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                            <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                        </svg>
-                        Trang chủ
-                    </a>
-                    <svg class="shrink-0 mx-2 size-4 text-gray-400 dark:text-neutral-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="m9 18 6-6-6-6"></path>
-                    </svg>
-                </li>
+    <ol class="flex items-center whitespace-nowrap lg:px-12 mx-4 mt-10 text-md">
+        <li class="inline-flex items-center">
+            <a href="{{ route('home') }}" class="flex items-center text-gray-500 hover:text-blue-600 focus:outline-none focus:text-blue-600 dark:text-neutral-500 dark:hover:text-blue-500 dark:focus:text-blue-500" >
+                <svg class="shrink-0 me-3 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+                Trang chủ
+            </a>
+            <svg class="shrink-0 mx-2 size-4 text-gray-400 dark:text-neutral-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m9 18 6-6-6-6"></path>
+            </svg>
+        </li>
 
-                <li class="inline-flex items-center text-sm text-amber-700 truncate dark:text-neutral-200" aria-current="page">
-                    Blog
-                </li>
+        <li class="inline-flex items-center text-amber-700 truncate dark:text-neutral-200" aria-current="page">
+            Bài viêt
+        </li>
     </ol>
-    <h2 class="mx-auto text-center font-bold text-4xl text-green-600">
-        Blog
+    <h2 class="mx-auto text-center font-bold text-4xl text-green-600 uppercase">
+        Bài viết
     </h2>
 
     <section class="py-10 lg:py-24">

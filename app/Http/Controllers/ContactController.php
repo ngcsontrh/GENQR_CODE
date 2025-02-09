@@ -18,6 +18,7 @@ class ContactController extends Controller
             'email' => 'required|email|max:255',
             'phone' => 'required|string|max:20',
             'message' => 'required|string',
+            'user_id' => 'nullable|exists:users,id'
         ]);
 
         Contact::create($validatedData);
