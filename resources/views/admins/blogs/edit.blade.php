@@ -4,7 +4,7 @@
         Chỉnh sửa Blog
     </x-slot>
     <div>
-        <div class="font-bold text-4xl text-green-600 mt-1 text-center uppercase"> Chỉnh sửa Blog</div>
+        <div class="font-bold text-3xl text-green-600 mt-1 text-center uppercase"> Chỉnh sửa Blog</div>
         <div class="flex flex-col mt-5">
             <div class="-m-1.5 overflow-x-auto [&::-webkit-scrollbar]:h-1 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-blue-300">
                 <form id="updateBlog" action="{{route('admin.blogs.update', $blog->id)}}" method="POST" class="md:w-4/5 md:m-auto mx-5 border-2 py-4 px-10 rounded-lg" enctype="multipart/form-data">
