@@ -23,7 +23,7 @@
     </ol>
 
     <!-- Tiêu đề -->
-    <h2 class="mx-auto text-center font-bold text-4xl text-green-600 mt-6 lg:mt-8 uppercase">
+    <h2 class="mx-auto text-center font-bold text-3xl text-green-600 mt-6 lg:mt-8 uppercase">
         Lịch sử tạo mã QR
     </h2>
 

@@ -25,7 +25,7 @@
     <div class="flex flex-col md:flex-row justify-between items-start md:space-x-4 p-6 xl:mx-40">
         <!-- Form nhập thông tin -->
         <div class="w-full p-6 bg-white border rounded-xl shadow-xl">
-            <h2 class="font-bold text-2xl mb-5 uppercase">Chọn loại mã QR</h2>
+            <h2 class="font-bold text-2xl text-green-600 mb-5 uppercase">Chọn loại mã QR</h2>
             <div id="menuButtons" class="grid grid-cols-2 gap-8 mb-4">
                 <button onclick="showForm('websiteForm', this)" class="font-bold text-white text-xl px-10 py-6 mb-2 border shadow-xl rounded-xl flex bg-purple-300 hover:text-purple-200 focus:text-white">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-7 h-7 mr-2 " fill="var(--template-selector-icon-main-color, #5D82D5)">

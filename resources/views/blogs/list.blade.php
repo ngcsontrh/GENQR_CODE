@@ -22,7 +22,7 @@
             Bài viêt
         </li>
     </ol>
-    <h2 class="mx-auto text-center font-bold text-4xl text-green-600 uppercase">
+    <h2 class="mx-auto text-center font-bold text-3xl text-green-600 uppercase">
         Bài viết
     </h2>
 

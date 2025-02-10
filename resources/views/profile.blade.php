@@ -25,7 +25,7 @@
     <div class="grid grid-cols-1 lg:grid-cols-2 ">
         <!-- Form cập nhật thông tin -->
         <div class="container mx-auto px-4 py-8">
-            <h2 class="text-3xl font-bold text-4xl text-green-600 mb-8 text-center text-gray-800 uppercase">Thông tin tài khoản</h2>
+            <h2 class="text-3xl font-bold text-3xl text-green-600 mb-8 text-center text-gray-800 uppercase">Thông tin tài khoản</h2>
 
             <form action="{{ route('user.account.update') }}" method="POST" class="bg-white shadow-lg rounded-lg p-8 max-w-lg mx-auto">
                 @csrf
@@ -66,7 +66,7 @@
 
         <!-- Form đổi mật khẩu -->
         <div class="container mx-auto px-4 py-8 ">
-            <h2 class="text-3xl text-center font-bold text-4xl text-green-600 text-gray-800 mb-8 uppercase">Đổi mật khẩu</h2>
+            <h2 class="text-3xl text-center font-bold text-3xl text-green-600 text-gray-800 mb-8 uppercase">Đổi mật khẩu</h2>
 
             <form action="{{ route('user.account.change-password') }}" method="POST" class="bg-white shadow-lg rounded-lg p-8 max-w-lg mx-auto">
                 @csrf
