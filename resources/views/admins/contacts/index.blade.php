@@ -3,7 +3,7 @@
         Quản lý liên hệ
     </x-slot>
     <div>
-        <div class="font-bold text-3xl mt-1 text-center uppercase">Quản lý liên hệ</div>
+        <div class="font-bold text-4xl text-green-600 mt-1 text-center uppercase">Quản lý liên hệ</div>
         <div class="flex flex-col mt-5">
             <div class="-m-1.5 overflow-x-auto [&::-webkit-scrollbar]:h-1 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-blue-300">
                 <div class="mt-2 p-1.5 min-w-full inline-block align-middle">
