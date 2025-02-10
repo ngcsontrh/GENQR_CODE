@@ -20,7 +20,7 @@
                         <form method="GET" action="{{ route('admin.blogs.index') }}" class="flex flex-wrap items-center gap-4">
                             <div>
                                 <input type="text" name="title" id="title" value="{{ request('title') }}"
-                                       class="p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                                       class="p-2 block w-[19rem] border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                                        placeholder="Tìm theo tiêu đề" />
                             </div>
                             <div>
